@@ -3,21 +3,19 @@ A multi-agent AI system using Gemini LLMs, Google Search grounding, and Pydantic
 
 ## Overview
 
-AI Disaster Agent is a Python-based multi-agent AI project designed to identify and analyze natural disaster events using large language models (LLMs) and search-grounded information.
-
-The system leverages Google's Gemini models, Google Search grounding, and Pydantic schema validation to support structured information extraction and event analysis.
-
-This project explores how AI agents can combine external information retrieval, language model reasoning, and structured data validation to support real-world information analysis.
-
+AI Disaster Agent is an interactive Python project that uses Google Gemini 2.5 Flash, Google Search grounding, Pydantic, and the Wikimedia Commons API to identify a disaster event and assemble a structured situation report. It combines conversational intent clarification, event research, rule-based severity scoring, image collection, AI summarization, and timeline generation.
 
 
 ## Key Features:
 
-- Multi-Agent Architecture: Uses an AI agent pipeline to support natural disaster identification and analysis.
-- LLM Integration: Integrates Gemini models for natural language understanding and information processing.
-- Search Grounding: Incorporates Google Search grounding to provide external information relevant to disaster events.
-- Structured Output: Uses Pydantic models to define and validate structured AI-generated responses.
-- Automated Analysis: Explores how AI agents can streamline the process of gathering and analyzing disaster-related information.
+- Intent clarification: Asks follow-up questions to collect disaster type, location, and approximate time period.
+- Grounded event research: Uses Gemini 2.5 Flash with Google Search grounding to identify an event, collect impact details, and gather article links.
+- Structured validation: Uses Pydantic models to validate intent, event details, images, situation briefs, and timeline entries.
+- Severity scoring: Calculates a custom 1–5 score using reported deaths, injuries, displacement, and infrastructure damage.
+- Image enrichment: Searches Wikimedia Commons for relevant images and associated licensing/author metadata; downloads image files locally.
+- Situation brief: Produces a headline, overview, impact summary, affected-population notes, response summary, key facts, and source URLs.
+- Timeline generation: Creates a chronological list of major developments, including times when available.
+- Console report: Displays the resulting disaster situation report in a readable format.
 
 
 ## System Workflow
@@ -29,6 +27,17 @@ The project follows a multi-stage AI processing workflow:
 3. Event Analysis: Gemini models process the retrieved information to generate insights.
 4. Output Validation: Pydantic schemas validate the structure of generated responses.
 5. Structured Results: The system produces organized information for further analysis.
+
+## Getting started (Google Colab)
+1. Open Full Pipeline AI Agent.ipynb in Google Colab.
+2. Under Secrets (key icon), add a secret named GOOGLE_API_KEY containing your Gemini API key. Enable notebook access to that secret.
+3. Run the notebook cells from top to bottom. The notebook installs its dependencies with:
+ 
+   !pip install -q google-genai langchain langchain-google-genai requests pytest
+4. The final cell runs run_disaster_agent(). Respond to the clarification agent's prompts about the disaster you want to research. Type quit to exit the clarification stage.
+5. Review the console report. The pipeline also returns the assembled event data as final_event_data.
+   
+Requirements: Internet access, a valid Gemini API key, and access to Google Search grounding and Wikimedia Commons. API usage may incur costs or be subject to quotas.
 
 
 ## Concepts
@@ -43,6 +52,7 @@ This project demonstrates practical experience with:
 - Search-grounded AI workflows
 - Python software development
 
+
 ## Project Motivation
 
 Natural disaster information can be distributed across multiple sources and presented in different formats, making it challenging to identify and organize relevant details efficiently.
@@ -54,10 +64,9 @@ This project explores the use of AI agents to assist with information retrieval 
 
 Potential extensions include:
 
-- Integrating additional disaster monitoring data sources
-- Implementing more comprehensive error handling and logging
-- Evaluating response accuracy and reliability
-- Developing an interactive dashboard
-- Adding automated testing and deployment workflows
+- AI-generated casualty estimates, summaries, sources, and timelines require fact-checking against authoritative reporting.
+- Search-grounded results and Wikimedia API responses may vary or fail; error handling and retries could be improved.
+- The severity scoring rubric is heuristic and does not account for data uncertainty.
+- Additional automated tests, source verification, clearer separation of pipeline modules, and an interactive UI would improve maintainability and usability.
 
 
